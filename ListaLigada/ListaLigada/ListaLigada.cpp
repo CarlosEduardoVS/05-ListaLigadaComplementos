@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 using namespace std;
 
 // definicao de tipo
@@ -8,6 +8,7 @@ struct NO {
 };
 
 NO* primeiro = NULL;
+NO* N = NULL;
 
 // headers
 void menu();
@@ -69,7 +70,7 @@ void menu()
 
 void inicializar()
 {
-	// se a lista já possuir elementos
+	// se a lista jï¿½ possuir elementos
 // libera a memoria ocupada
 	NO* aux = primeiro;
 	while (aux != NULL) {
@@ -120,33 +121,99 @@ void inserirElemento()
 		return;
 	}
 
-	cout << "Digite o elemento: ";
+	cout << "Digite um numero: ";
 	cin >> novo->valor;
 	novo->prox = NULL;
 
-	if (primeiro == NULL)
+	NO* verificacao = posicaoElemento(novo->valor);
+
+	if (verificacao == NULL)
 	{
-		primeiro = novo;
+		if (primeiro == NULL)
+		{
+			primeiro = novo;
+			N = novo;
+		}
+		else
+		{
+			N->prox = novo;
+			N = novo;
+		}
+		cout << "Inserido com sucesso.\n";
 	}
 	else
 	{
-		// procura o final da lista
-		NO* aux = primeiro;
-		while (aux->prox != NULL) {
-			aux = aux->prox;
-		}
-		aux->prox = novo;
+		cout << "Esse numero ja ta na lista.\n";
 	}
+
+
 }
 
 void excluirElemento()
 {
+	if (primeiro == NULL) {
+		cout << "Tem nada.\n";
+	}
+	else {
+		int Vaisair;
+		cout << "Digite o numero para busca.\n: ";
+		cin >> Vaisair;
+
+		NO* busca = posicaoElemento(Vaisair);
+
+		if (busca == NULL) {
+			cout << "O numero nao esta na lista";
+		}
+		else {
+			if (busca == primeiro) {
+				primeiro = busca->prox;
+
+			}
+			else {
+				NO* aux = primeiro;
+				while (aux->prox != busca) {
+					aux = aux->prox;
+				}
+				aux->prox = busca->prox;
+			}
+			cout << "O numero foi excluido.\n";
+		}
+		free(busca);
+
+
+	}
 
 }
 
 void buscarElemento()
 {
+	if (primeiro == NULL) {
+		cout << "Tem nada.\n";
+	}
+	else {
+		int Numerobuscar;
+		cout << "Digite o elemento a ser buscado: ";
+		cin >> Numerobuscar;
+		NO* numero = posicaoElemento(Numerobuscar);
 
+		if (numero == NULL) {
+			cout << "O numero nao faz parte da lista.\n";
+		}
+		else {
+			cout << "Esse e o numero que foi buscado: " << numero->valor;
+		}
+	}
 }
 
-
+NO* posicaoElemento(int numero)
+{
+	NO* aux = primeiro;
+	while (aux != NULL) {
+		if (aux->valor == numero)
+		{
+			break;
+		}
+		aux = aux->prox;
+	}
+	return aux;
+}
