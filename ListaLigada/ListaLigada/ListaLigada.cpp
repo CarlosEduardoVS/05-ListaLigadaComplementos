@@ -192,7 +192,7 @@ void buscarElemento()
 	}
 	else {
 		int Numerobuscar;
-		cout << "Digite o elemento a ser buscado: ";
+		cout << "Digite o numero para a busca: ";
 		cin >> Numerobuscar;
 		NO* numero = posicaoElemento(Numerobuscar);
 
